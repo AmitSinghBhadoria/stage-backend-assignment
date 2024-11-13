@@ -7,6 +7,7 @@ import { TVShow, TVShowSchema } from '../models/tvshow.schema';
   imports: [
     MongooseModule.forFeature([{ name: TVShow.name, schema: TVShowSchema }]), // Register Movie model with Mongoose
   ],
+  exports: [MongooseModule],
   controllers: [TVShowsController],
   providers: [TVShowsService],
 })

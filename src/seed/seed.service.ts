@@ -16,7 +16,20 @@ export class SeedService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.seedDatabase();
+    await this.seedDatabaseIfEmpty();
+  }
+
+  private async seedDatabaseIfEmpty() {
+    const movieCount = await this.movieModel.countDocuments();
+    const tvShowCount = await this.tvShowModel.countDocuments();
+
+    // Check if the collections are empty
+    if (movieCount === 0 && tvShowCount === 0) {
+      this.logger.log('Database is empty, seeding data...');
+      await this.seedDatabase();
+    } else {
+      this.logger.log('Database already contains data, skipping seeding.');
+    }
   }
 
   async seedDatabase() {
